@@ -166,13 +166,18 @@ AmpSwitchController.prototype.parseStatus = function(state) {
     if(state.status=='play' && state.status!=status){
         status=state.status;
         self.on();
-				setTimeout(self.off, 500);
+	setTimeout(function() {
+    		self.off();
+	}, 1000);
+
     } else if((state.status=='pause' || state.status=='stop') && (status!='pause' && status!='stop')){
 				self.logger.ASdebug('InitTimeout - GPIO Off in: ' + delay + ' ms');
 				self.OffTimerID = setTimeout(function() {
 					status=state.status;
 					self.on();
-					setTimeout(self.off, 500);
+        				setTimeout(function() {
+                				self.off();
+        				}, 1000);
 				}, delay);
     }
 
